@@ -1,4 +1,4 @@
-from flask import Flask, make_response, render_template, url_for, session, redirect
+from flask import Flask, make_response, render_template, url_for, session, redirect, flash
 from flask.ext.script import Manager
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.moment import Moment
@@ -6,6 +6,8 @@ from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 from datetime import datetime
+from flask.ext.migrate import Migrate, MigrateCommand
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -13,6 +15,8 @@ app.config['SECRET_KEY'] = 'hard to guess string'
 manager = Manager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+migrate = Migrate(app, db)
+
 
 class NameForm(Form):
 	name = StringField('What is your name?', validators=[Required()])
